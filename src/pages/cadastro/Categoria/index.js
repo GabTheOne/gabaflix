@@ -2,7 +2,7 @@
 eslint linebreak-style: ["error", "windows"]
 */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import PageDefault from '../../../components/PageDefault';
 import FormField from '../../../components/FormField';
@@ -26,6 +26,14 @@ function Categoria() {
     });
   }
 
+  useEffect(() => {
+    const URL = 'http://localhost:8080/categorias';
+    fetch(URL);
+    // setTimeout(() => {
+
+    // }, 2 * 1000);
+  }, []); // Se passar vazio, executa uma vez só quando abre a aplicação
+
   return (
     <PageDefault>
       <h1>
@@ -35,6 +43,7 @@ function Categoria() {
 
       <form
         onSubmit={function handleSubmit(oEvent) {
+          console.log('onSubmitEvent');
           oEvent.preventDefault();
           setCategories([...categories, category]);
           setCategory(initialCategory);
@@ -51,9 +60,9 @@ function Categoria() {
 
         <FormField
           label="Descrição"
-          name="name"
+          name="description"
           type="textarea"
-          value={category.name}
+          value={category.description}
           onChange={setValue}
         />
 
@@ -68,8 +77,14 @@ function Categoria() {
         <Button>Cadastrar</Button>
       </form>
 
+      {categories.length === 0 && (
+      <div>
+        Loading...
+      </div>
+      )}
+
       <ul>
-        {categories.map((cat, idx) => <li key={`${cat.name}${idx}`}>{cat.name}</li>)}
+        {categories.map((cat) => <li key={`${cat.name}`}>{cat.name}</li>)}
       </ul>
       <Link to="/">Ir para home</Link>
     </PageDefault>
