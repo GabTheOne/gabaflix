@@ -1,30 +1,40 @@
-import React from 'react';
-import { VideoCardGroupContainer, Title, ExtraLink } from './styles';
-import VideoCard from './components/VideoCard'; 
-import Slider, { SliderItem } from '../Slider';
+import React from "react";
+
+import { VideoCardGroupContainer, Title, ExtraLink } from "./styles";
+
+import VideoCard from "./components/VideoCard";
+
+import Slider, { SliderItem } from "../Slider";
 
 function VideoCardGroup({
   ignoreFirstVideo,
+
   category,
 }) {
-  const categoryTitle = category.titulo;
+  const categoryTitle = category.title;
+
   const categoryColor = category.cor;
+
   const categoryExtraLink = category.link_extra;
-  const videos = category.videos;
+
+  const { videos } = category;
+
   return (
     <VideoCardGroupContainer>
       {categoryTitle && (
         <>
-          <Title style={{ backgroundColor: categoryColor || 'red' }}>
+          <Title style={{ backgroundColor: categoryColor || "red" }}>
             {categoryTitle}
           </Title>
-          {categoryExtraLink && 
+
+          {categoryExtraLink && (
             <ExtraLink href={categoryExtraLink.url} target="_blank">
-              {categoryExtraLink.text}  
+              {categoryExtraLink.text}
             </ExtraLink>
-          }
+          )}
         </>
       )}
+
       <Slider>
         {videos.map((video, index) => {
           if (ignoreFirstVideo && index === 0) {
@@ -32,9 +42,9 @@ function VideoCardGroup({
           }
 
           return (
-            <SliderItem key={video.titulo}>
+            <SliderItem key={video.title}>
               <VideoCard
-                videoTitle={video.titulo}
+                videoTitle={video.title}
                 videoURL={video.url}
                 categoryColor={categoryColor}
               />
