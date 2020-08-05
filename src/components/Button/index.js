@@ -1,6 +1,3 @@
-/*
-eslint linebreak-style: ["error", "windows"]
-*/
 import styled from 'styled-components';
 
 const Button = styled.button`
