@@ -3,29 +3,24 @@ import { Link } from 'react-router-dom';
 import PageDefault from '../../../components/PageDefault';
 import FormField from '../../../components/FormField';
 import Button from '../../../components/Button';
+import useForm from '../../../hooks/useForm';
+import categoryRepository from '../../../repositories/categorias';
 
 function Categoria() {
   const [categories, setCategories] = useState([]);
 
   const initialCategory = {
-    name: '',
+    title: '',
     description: '',
     color: '#000',
   };
 
-  const [category, setCategory] = useState(initialCategory);
-
-  function setValue(oEvent) {
-    setCategory({
-      ...category,
-      [oEvent.target.getAttribute('name')]: oEvent.target.value,
-    });
-  }
+  const {
+    values, setValue, clearForm,
+  } = useForm(initialCategory);
 
   useEffect(() => {
-    const URL = 'http://localhost:8080/categorias';
-    fetch(URL).then(async (response) => {
-      const resp = await response.json();
+    categoryRepository.getAll().then((resp) => {
       setCategories([
         ...resp,
       ]);
@@ -39,22 +34,22 @@ function Categoria() {
     <PageDefault>
       <h1>
         Cadastro de Categoria
-        {category.name}
+        {values.title}
       </h1>
 
       <form
         onSubmit={function handleSubmit(oEvent) {
           oEvent.preventDefault();
-          setCategories([...categories, category]);
-          setCategory(initialCategory);
+          setCategories([...categories, values]);
+          clearForm();
         }}
       >
 
         <FormField
           label="Nome da Categoria"
-          name="name"
+          name="title"
           type="text"
-          value={category.name}
+          value={values.title}
           onChange={setValue}
         />
 
@@ -62,7 +57,7 @@ function Categoria() {
           label="Descrição"
           name="description"
           type="textarea"
-          value={category.description}
+          value={values.description}
           onChange={setValue}
         />
 
@@ -70,7 +65,7 @@ function Categoria() {
           label="Cor"
           name="color"
           type="color"
-          value={category.color}
+          value={values.color}
           onChange={setValue}
         />
 
@@ -84,7 +79,7 @@ function Categoria() {
       )}
 
       <ul>
-        {categories.map((cat) => <li key={`${cat.name}`}>{cat.name}</li>)}
+        {categories.map((cat) => <li key={`${cat.title}`}>{cat.title}</li>)}
       </ul>
       <Link to="/">Ir para home</Link>
     </PageDefault>
