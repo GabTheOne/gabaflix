@@ -2,9 +2,9 @@
   "categorias": [
     {
       "id": 1,
-      "nome": "Front End",
-      "descricao": "Categoria TOP",
-      "cor": "#cbd1ff"
+      "name": "Front End",
+      "description": "Categoria TOP",
+      "color": "#cbd1ff"
     }
   ]
 }

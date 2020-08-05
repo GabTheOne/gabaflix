@@ -28,7 +28,12 @@ function Categoria() {
 
   useEffect(() => {
     const URL = 'http://localhost:8080/categorias';
-    fetch(URL);
+    fetch(URL).then(async (response) => {
+      const resp = await response.json();
+      setCategories([
+        ...resp,
+      ]);
+    });
     // setTimeout(() => {
 
     // }, 2 * 1000);
@@ -43,7 +48,6 @@ function Categoria() {
 
       <form
         onSubmit={function handleSubmit(oEvent) {
-          console.log('onSubmitEvent');
           oEvent.preventDefault();
           setCategories([...categories, category]);
           setCategory(initialCategory);
